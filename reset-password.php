@@ -13,9 +13,9 @@ $pass = getenv('DB_PASSWORD');
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
     $hash = password_hash('Muslim92', PASSWORD_BCRYPT);
-    $stmt = $pdo->prepare("UPDATE ea_users SET password = ? WHERE id = 1");
+    $stmt = $pdo->prepare("UPDATE ea_user_settings SET password = ? WHERE id_users = 1");
     $stmt->execute([$hash]);
-    echo "Password reset OK for user id=1 (email: deluxearabiaksa@gmail.com). Login: deluxearabiaksa@gmail.com / Muslim92";
+    echo "Done. Rows: " . $stmt->rowCount() . " | Hash: " . $hash;
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
