@@ -33,4 +33,10 @@ sed -i "s/Listen 80/Listen ${APP_PORT}/" /etc/apache2/ports.conf
 sed -i "s/<VirtualHost \\*:80>/<VirtualHost *:${APP_PORT}>/" /etc/apache2/sites-enabled/000-default.conf
 
 echo "Starting Easy!Appointments on port ${APP_PORT}..."
+
+# Fix Apache MPM: ensure only mpm_prefork is loaded
+find /etc/apache2/mods-enabled/ \( -name 'mpm_*.conf' -o -name 'mpm_*.load' \) -delete 2>/dev/null || true
+ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
+ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load
+
 exec apache2-foreground
