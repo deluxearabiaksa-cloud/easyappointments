@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-
 /* ----------------------------------------------------------------------------
  * Easy!Appointments - Online Appointment Scheduler
  *
@@ -10,7 +9,6 @@
  * @link        https://easyappointments.org
  * @since       v1.5.0
  * ---------------------------------------------------------------------------- */
-
 /**
  * Add security headers to protect against common attacks.
  *
@@ -22,19 +20,14 @@ function add_security_headers(): void
     // Prevent XSS attacks - allow inline scripts and styles for the app's functionality
     // But restrict to same-origin for other resources
     header('X-Content-Type-Options: nosniff');
-
-    // Prevent clickjacking attacks
-    header('X-Frame-Options: SAMEORIGIN');
-
+    // Allow embedding from Systeme.io and same origin
+    header('Content-Security-Policy: frame-ancestors \'self\' https://deluxearabiaksa.systeme.io');
     // Enable XSS filter in browsers (legacy, but still useful)
     header('X-XSS-Protection: 1; mode=block');
-
     // Referrer policy for privacy
     header('Referrer-Policy: strict-origin-when-cross-origin');
-
     // Permissions policy - restrict sensitive features
     header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
-
     // If the app is served over HTTPS, add HSTS header
     if (
         (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
