@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deluxe Arabia — Offre Deluxe</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+#da-page *, #da-page *::before, #da-page *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+}
+#da-page {
+  position: relative;
+  background-color: #1a0b02;
+  color: #EDE0C4;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow: hidden;
+  width: 100%;
+}
+#da-page #cosmos {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+}
+#da-page #da-starfield { display: block; width: 100%; height: 100%; }
+#da-page .neb {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+#da-page .neb-a {
+  width: 900px; height: 700px;
+  background: radial-gradient(ellipse, rgba(160,75,10,0.55) 0%, transparent 65%);
+  top: -200px; left: -250px; filter: blur(55px);
+}
+#da-page .neb-b {
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(140,60,8,0.48) 0%, transparent 65%);
+  top: 40%; right: -180px; filter: blur(65px);
+}
+#da-page .neb-c {
+  width: 1000px; height: 600px;
+  background: radial-gradient(ellipse, rgba(110,50,5,0.50) 0%, transparent 65%);
+  bottom: -200px; left: 10%; filter: blur(60px);
+}
+#da-page .neb-d {
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(200,120,20,0.30) 0%, transparent 70%);
+  top: 50%; left: 20%; filter: blur(70px);
+}
+#da-page .neb-e {
+  width: 500px; height: 350px;
+  background: radial-gradient(ellipse, rgba(180,90,15,0.38) 0%, transparent 70%);
+  top: 20%; left: 50%; filter: blur(50px);
+}
+#da-page .wrap {
+  position: relative; z-index: 1;
+  max-width: 820px; margin: 0 auto; padding: 0 24px 80px;
+}
+#da-page .gold-line {
+  width: 72px; height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+  margin: 0 auto;
+}
+#da-page .gold-line-full {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+  margin: 0 auto;
+}
+#da-page header { text-align: center; padding: 52px 0 44px; }
+#da-page .logo-top-line {
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+  margin: 0 auto 18px;
+}
+#da-page .logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px; font-weight: 700; letter-spacing: 8px;
+  color: #D4AF6A; text-transform: uppercase; margin-bottom: 8px;
+}
+#da-page .logo-tagline {
+  font-size: 10px; letter-spacing: 5px;
+  color: rgba(201,168,76,0.55); text-transform: uppercase; font-weight: 400;
+}
+#da-page .logo-bottom-line {
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+  margin: 18px auto 0;
+}
+#da-page .hero { text-align: center; padding: 56px 0 44px; }
+#da-page .eyebrow {
+  display: inline-block; font-size: 10px; letter-spacing: 4px;
+  color: #C9A84C; text-transform: uppercase;
+  border: 1px solid rgba(201,168,76,0.3); padding: 7px 20px;
+  margin-bottom: 36px; font-weight: 400;
+}
+#da-page .hero-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5.5vw, 48px); font-weight: 900;
+  line-height: 1.18; color: #FFFFFF; margin-bottom: 28px; letter-spacing: -0.5px;
+}
+#da-page .hero-headline em { font-style: italic; color: #D4AF6A; }
+#da-page .hero-sub {
+  font-size: 15px; line-height: 1.8; color: rgba(237,224,196,0.62);
+  max-width: 540px; margin: 0 auto 36px; font-weight: 300;
+}
+#da-page .vsl-wrap { margin: 0 auto 52px; max-width: 740px; }
+#da-page .vsl-outer {
+  border: 1px solid rgba(201,168,76,0.25); padding: 4px; background: #120700;
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.08), 0 8px 60px rgba(0,0,0,0.7), 0 0 80px rgba(120,60,10,0.12);
+}
+#da-page .vsl-screen {
+  width: 100%; aspect-ratio: 16 / 9; background: #040200;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+#da-page .vsl-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 60%, rgba(100,50,5,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+#da-page .vsl-caption {
+  text-align: center; margin-top: 14px; font-size: 10px;
+  letter-spacing: 3px; color: rgba(201,168,76,0.4); text-transform: uppercase;
+}
+#da-page .citation-block {
+  max-width: 620px; margin: 0 auto 56px; padding: 28px 36px;
+  border-left: 1.5px solid rgba(201,168,76,0.5);
+  background: rgba(201,168,76,0.025);
+}
+#da-page .citation-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-style: italic; line-height: 1.7;
+  color: rgba(237,224,196,0.82);
+}
+#da-page .benefits-section { margin-bottom: 72px; }
+#da-page .section-label {
+  text-align: center; font-size: 10px; letter-spacing: 5px;
+  color: rgba(201,168,76,0.55); text-transform: uppercase;
+  margin-bottom: 44px; font-weight: 500;
+}
+#da-page .benefits-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(201,168,76,0.1);
+}
+#da-page .benefit { background: #1a0b02; padding: 40px 32px; transition: background 0.3s; }
+#da-page .benefit:hover { background: rgba(201,168,76,0.04); }
+#da-page .benefit-num {
+  font-family: 'Playfair Display', serif; font-size: 11px;
+  color: rgba(201,168,76,0.4); letter-spacing: 3px; margin-bottom: 20px; font-weight: 400;
+}
+#da-page .benefit-title {
+  font-family: 'Playfair Display', serif; font-size: 17px;
+  color: #D4AF6A; margin-bottom: 12px; font-weight: 700; line-height: 1.3;
+}
+#da-page .benefit-text {
+  font-size: 13px; line-height: 1.75; color: rgba(237,224,196,0.55); font-weight: 300;
+}
+#da-page .engagement {
+  border: 1px solid rgba(201,168,76,0.2); padding: 56px 48px;
+  text-align: center; margin-bottom: 48px; position: relative;
+  background: rgba(201,168,76,0.02);
+}
+#da-page .engagement::before, #da-page .engagement::after {
+  content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+  width: 64px; height: 1.5px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+}
+#da-page .engagement::before { top: -1px; }
+#da-page .engagement::after { bottom: -1px; }
+#da-page .engagement-label {
+  font-size: 10px; letter-spacing: 5px; color: rgba(201,168,76,0.5);
+  text-transform: uppercase; margin-bottom: 24px; font-weight: 500;
+}
+#da-page .engagement-title {
+  font-family: 'Playfair Display', serif; font-size: 24px;
+  color: #FFFFFF; font-weight: 700; margin-bottom: 24px; line-height: 1.3;
+}
+#da-page .engagement-body {
+  font-size: 15px; line-height: 1.85; color: rgba(237,224,196,0.65);
+  max-width: 520px; margin: 0 auto 20px; font-weight: 300;
+}
+#da-page .engagement-italic {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 14px; color: rgba(201,168,76,0.6); line-height: 1.6;
+}
+
+/* ── Easy!Appointments embed container ── */
+#da-page .cal-wrap {
+  margin: 0 auto 72px;
+  border: 1px solid rgba(201,168,76,0.22);
+  background: #0d0500;
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.06), 0 8px 60px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+#da-page .cal-iframe {
+  width: 100%;
+  height: 720px;
+  border: none;
+  display: block;
+  background: #0d0500;
+}
+#da-page .cal-mention {
+  text-align: center;
+  padding: 14px 0 18px;
+  font-size: 10px;
+  color: rgba(237,224,196,0.22);
+  letter-spacing: 0.5px;
+  border-top: 1px solid rgba(201,168,76,0.08);
+}
+#da-page .meet-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 5px 14px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(201,168,76,0.6);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+#da-page footer { padding-top: 36px; text-align: center; }
+#da-page .footer-nav {
+  display: flex; gap: 28px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 18px; list-style: none;
+}
+#da-page .footer-nav a {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(201,168,76,0.35); text-decoration: none;
+  transition: color 0.25s; font-weight: 400;
+}
+#da-page .footer-nav a:hover { color: rgba(201,168,76,0.75); }
+#da-page .footer-copy {
+  font-size: 10px; color: rgba(237,224,196,0.15); letter-spacing: 1px;
+}
+@media (max-width: 580px) {
+  #da-page .benefits-grid { grid-template-columns: 1fr; }
+  #da-page .hero-headline { font-size: 26px; }
+  #da-page .engagement { padding: 40px 24px; }
+  #da-page .citation-block { padding: 22px 22px; }
+  #da-page .cal-iframe { height: 620px; }
+}
+</style>
+</head>
+<body>
+<div id="da-page">
+  <div id="cosmos">
+    <div class="neb neb-a"></div>
+    <div class="neb neb-b"></div>
+    <div class="neb neb-c"></div>
+    <div class="neb neb-d"></div>
+    <div class="neb neb-e"></div>
+    <canvas id="da-starfield"></canvas>
+  </div>
+  <div class="wrap">
+    <header>
+      <div class="logo-top-line"></div>
+      <div class="logo-name">Deluxe Arabia</div>
+      <div class="logo-tagline">L&rsquo;excellence au service du p&egrave;lerin</div>
+      <div class="logo-bottom-line"></div>
+    </header>
+    <div class="gold-line-full"></div>
+    <section class="hero">
+      <div class="eyebrow">Offre Deluxe</div>
+      <h1 class="hero-headline">
+        Votre Omra,<br>
+        <em>accompagn&eacute;e sans compromis.</em>
+      </h1>
+      <p class="hero-sub">Vous avez &eacute;t&eacute; identifi&eacute; comme un profil Deluxe. Ce niveau d&rsquo;accompagnement est con&ccedil;u pour ceux qui exigent une pr&eacute;sence totale, une anticipation absolue, et z&eacute;ro friction &mdash; du d&eacute;part au retour.</p>
+      <div class="gold-line"></div>
+    </section>
+    <section class="benefits-section" style="margin-bottom:72px;">
+      <p class="section-label">Ce que comprend votre accompagnement</p>
+      <div class="benefits-grid">
+        <div class="benefit">
+          <div class="benefit-num">A</div>
+          <div class="benefit-title">Prise en charge int&eacute;grale</div>
+          <p class="benefit-text">Transferts, h&eacute;bergement, programme &mdash; tout est orchestr&eacute; avant m&ecirc;me que vous posiez une question. Rien n&rsquo;est laiss&eacute; au hasard.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-num">B</div>
+          <div class="benefit-title">Accompagnateur d&eacute;di&eacute; sur place</div>
+          <p class="benefit-text">Une personne. Pas un num&eacute;ro. Disponible &agrave; chaque heure pour vous permettre de vous concentrer sur votre recueillement.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-num">C</div>
+          <div class="benefit-title">Programme sur-mesure</div>
+          <p class="benefit-text">Construit autour de vos pr&eacute;f&eacute;rences, votre rythme, vos intentions spirituelles. Chaque journ&eacute;e pens&eacute;e pour maximiser votre exp&eacute;rience.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-num">D</div>
+          <div class="benefit-title">Gestion des impr&eacute;vus invisible</div>
+          <p class="benefit-text">L&rsquo;inattendu existe. Nous le traitons avant qu&rsquo;il ne vous atteigne. Vous n&rsquo;en saurez parfois m&ecirc;me pas l&rsquo;existence.</p>
+        </div>
+      </div>
+    </section>
+    <div class="gold-line-full"></div>
+    <div class="citation-block" style="margin-top:56px;">
+      <p class="citation-text">&laquo;&nbsp;La v&eacute;ritable s&eacute;r&eacute;nit&eacute; ne se promet pas. Elle se construit, &eacute;tape par &eacute;tape, par une pr&eacute;sence que vous ne devriez jamais avoir &agrave; chercher.&nbsp;&raquo;</p>
+    </div>
+    <section class="engagement">
+      <div class="engagement-label">Entretien priv&eacute;</div>
+      <div class="engagement-title">R&eacute;servez votre appel Deluxe</div>
+      <div class="meet-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 10l4.553-2.277A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" stroke="rgba(201,168,76,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Google Meet &middot; 30 minutes
+      </div>
+      <p class="engagement-body">30 minutes. Sans engagement. Pour &eacute;changer sur votre projet et d&eacute;finir ensemble les contours de votre accompagnement.</p>
+      <p class="engagement-italic">Places limit&eacute;es &mdash; s&eacute;lection sur profil uniquement.</p>
+    </section>
+    <div class="cal-wrap">
+      <iframe
+        class="cal-iframe"
+        src="https://easyappointments-production-4010.up.railway.app/index.php/booking"
+        loading="lazy"
+        title="R&eacute;server un appel Deluxe Arabia"
+        allow="camera; microphone"
+        allowfullscreen>
+      </iframe>
+      <p class="cal-mention">Entretien priv&eacute; &middot; Google Meet &middot; 30 minutes &middot; Sans engagement</p>
+    </div>
+    <div class="gold-line-full" style="margin-bottom:40px;"></div>
+    <footer>
+      <nav class="footer-nav">
+        <a href="#">Mentions L&eacute;gales</a>
+        <a href="#">Politique de Confidentialit&eacute;</a>
+        <a href="#">CGV</a>
+        <a href="#">Contact</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Mansa Empire LLC &mdash; Deluxe Arabia. Tous droits r&eacute;serv&eacute;s.</p>
+    </footer>
+  </div>
+</div>
+<script>
+(function(){
+  var canvas=document.getElementById('da-starfield');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W,H,stars=[],paillettes=[];
+  function init(){var page=document.getElementById('da-page');W=canvas.width=page?page.offsetWidth:window.innerWidth;H=canvas.height=page?page.scrollHeight:window.innerHeight;}
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(init,120);});
+  for(var i=0;i<500;i++){stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.4+0.2,o:Math.random()*0.8+0.2,speed:Math.random()*0.0004+0.0001,phase:Math.random()*Math.PI*2,warm:Math.random()>0.4});}
+  function mkP(){return{x:Math.random(),y:1+Math.random()*0.05,r:Math.random()*0.65+0.15,o:0,maxO:Math.random()*0.85+0.35,vy:(Math.random()*0.10+0.05)/1000,life:0,maxLife:Math.random()*0.55+0.28};}
+  for(var j=0;j<130;j++){var p=mkP();p.life=Math.random()*p.maxLife;p.y=Math.random();paillettes.push(p);}
+  var t=0,started=false;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(function(s){var o=s.o*(0.4+0.6*Math.sin(t*s.speed*800+s.phase));ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);ctx.fillStyle=s.warm?'rgba(225,145,55,'+o+')':'rgba(240,195,100,'+o+')';ctx.fill();});
+    paillettes.forEach(function(p){
+      p.life+=0.004;p.y-=p.vy;
+      var pg=p.life/p.maxLife;
+      if(pg<0.2){p.o=p.maxO*(pg/0.2);}else if(pg<0.72){p.o=p.maxO;}else{p.o=p.maxO*(1-(pg-0.72)/0.28);}
+      if(p.life>=p.maxLife||p.y<0){var n=mkP();p.x=n.x;p.y=n.y;p.r=n.r;p.maxO=n.maxO;p.vy=n.vy;p.life=0;p.maxLife=n.maxLife;p.o=0;}
+      ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);ctx.fillStyle='rgba(255,200,80,'+p.o+')';ctx.fill();
+    });
+    t+=16;requestAnimationFrame(draw);
+  }
+  function start(){init();if(!started){started=true;draw();}}
+  if(document.readyState==='complete'){start();}else{window.addEventListener('load',start);}
+})();
+</script>
+</body>
+</html>
