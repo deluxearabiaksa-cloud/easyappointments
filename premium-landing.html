@@ -713,29 +713,35 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     var btn=document.getElementById('da-submit-btn');
     btn.disabled=true; btn.textContent='Validation en coursâ¦';
     /* EA attend firstName + lastName â on passe le prÃ©nom seul */
-    var payload={
-      start_datetime: state.selectedDate+' '+state.selectedSlot.slice(0,5)+':00',
-      end_datetime:   addMins(state.selectedDate+' '+state.selectedSlot.slice(0,5), 30),
-      id_services: EA.serviceId,
-      id_users_provider: EA.providerId,
-      is_unavailability: 0,
-      customer: { firstName: name, lastName: '.', email: email, phone: phone||'' }
-    };
-    fetch(EA.baseUrl+'/api/v1/appointments',{
-      method:'POST',
-      headers:{ 'Authorization':'Bearer '+EA.apiKey, 'Content-Type':'application/json' },
-      body: JSON.stringify(payload)
+    /* 2-step: create customer then book appointment */
+    var h = { 'Authorization':'Bearer '+EA.apiKey, 'Content-Type':'application/json' };
+    fetch(EA.baseUrl+'/api/v1/customers',{
+      method:'POST', headers:h,
+      body: JSON.stringify({ firstName: name, lastName: '.', email: email, phone: phone||'' })
+    })
+    .then(function(r){ if(!r.ok) return r.json().then(function(e){ throw new Error(e.message||'Erreur customer '+r.status); }); return r.json(); })
+    .then(function(customer){
+      return fetch(EA.baseUrl+'/api/v1/appointments',{
+        method:'POST', headers:h,
+        body: JSON.stringify({
+          start: state.selectedDate+' '+state.selectedSlot.slice(0,5)+':00',
+          end:   addMins(state.selectedDate+' '+state.selectedSlot.slice(0,5), 30),
+          serviceId: EA.serviceId,
+          providerId: EA.providerId,
+          isUnavailability: false,
+          customerId: customer.id
+        })
+      });
     })
     .then(function(r){ if(!r.ok) return r.json().then(function(e){ throw new Error(e.message||'Erreur '+r.status); }); return r.json(); })
     .then(function(){
       document.getElementById('da-success-msg').innerHTML =
-        'Votre entretien du <strong>'+fmtDateFR(state.selectedDate)+' Ã  '+state.selectedSlot.slice(0,5)+'</strong> est confirmÃ©.<br>'+
-        'Un email de confirmation a Ã©tÃ© envoyÃ© Ã  <strong>'+email+'</strong>.';
+        'Votre entretien confirmé le '+fmtDateFR(state.selectedDate)+' à '+state.selectedSlot.slice(0,5)+'. Email envoyé à <strong>'+email+'</strong>.';
       showStep('success');
     })
     .catch(function(e){
-      showErr(3,'RÃ©servation impossible : '+e.message);
-      btn.disabled=false; btn.textContent='Valider ma rÃ©servation';
+      showErr(3,'Réservation impossible : '+e.message);
+      btn.disabled=false; btn.textContent='Valider';
     });
   });
 
