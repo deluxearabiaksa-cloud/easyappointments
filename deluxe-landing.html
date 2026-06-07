@@ -653,25 +653,25 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     var parts=name.split(' '); var fn=parts[0]; var ln=parts.slice(1).join(' ')||'.';
     var h = { 'Authorization':'Bearer '+EA.apiKey, 'Content-Type':'application/json' };
     function getOrCreateCustomer(){
-      return fetch(EA.baseUrl+'/api/v1/customers',{
-        method:'POST', headers:h,
-        body: JSON.stringify({ firstName:fn, lastName:ln||'.', email:email, phone:phone||'' })
-      }).then(function(r){
-        if(r.ok) return r.json();
-        return r.json().then(function(e){
-          var msg = e.message||'';
-          if(msg.toLowerCase().indexOf('already in use')!==-1){
-            return fetch(EA.baseUrl+'/api/v1/customers',{headers:h})
-              .then(function(r2){ return r2.json(); })
-              .then(function(list){
-                var found=(list||[]).filter(function(c){ return c.email===email; })[0];
-                if(!found) throw new Error('Email d\u00e9j\u00e0 utilis\u00e9, client introuvable.');
-                return found;
-              });
-          }
-          throw new Error(msg||'Erreur customer '+r.status);
+      /* GET first — find existing customer by email, create only if absent */
+      return fetch(EA.baseUrl+'/api/v1/customers',{headers:h})
+        .then(function(r){
+          if(!r.ok) throw new Error('GET customers '+r.status);
+          return r.json();
+        })
+        .then(function(raw){
+          var list=Array.isArray(raw)?raw:(raw.data||raw.records||[]);
+          var em=email.toLowerCase().trim();
+          var found=list.filter(function(x){return(x.email||'').toLowerCase().trim()===em;})[0];
+          if(found) return found;
+          return fetch(EA.baseUrl+'/api/v1/customers',{
+            method:'POST', headers:h,
+            body: JSON.stringify({ firstName:fn, lastName:ln||'.', email:email, phone:phone||'' })
+          }).then(function(r2){
+            if(r2.ok) return r2.json();
+            return r2.json().then(function(e){ throw new Error(e.message||'Erreur customer '+r2.status); });
+          });
         });
-      });
     }
     getOrCreateCustomer()
     .then(function(customer){
