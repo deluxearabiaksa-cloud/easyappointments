@@ -565,9 +565,10 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     return dayFR+' '+d+' '+MONTHS_FR[m-1]+' '+y;
   }
   function addMins(s,n){
-    var d=new Date(s.replace(' ','T'));
-    d.setMinutes(d.getMinutes()+n);
-    return d.toISOString().replace('T',' ').slice(0,19);
+    var parts=s.split(' '), timeParts=parts[1].split(':');
+    var h=parseInt(timeParts[0]), m=parseInt(timeParts[1])+n;
+    h+=Math.floor(m/60); m=m%60;
+    return parts[0]+' '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':00';
   }
 
   function renderCal(){
@@ -649,8 +650,8 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     btn.disabled=true; btn.textContent='Validation en coursâ¦';
     var parts=name.split(' '); var fn=parts[0]; var ln=parts.slice(1).join(' ')||'.';
     var payload={
-      start: state.selectedDate+' '+state.selectedSlot,
-      end:   addMins(state.selectedDate+' '+state.selectedSlot, 30),
+      start: state.selectedDate+' '+state.selectedSlot.slice(0,5)+':00',
+      end:   addMins(state.selectedDate+' '+state.selectedSlot.slice(0,5), 30),
       serviceId: EA.serviceId, providerId: EA.providerId,
       customer: { firstName:fn, lastName:ln, email:email, phone:phone }
     };
