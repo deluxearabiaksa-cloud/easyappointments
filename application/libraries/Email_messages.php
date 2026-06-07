@@ -274,7 +274,7 @@ class Email_messages
                 }
 
                 if ($html) {
-                                $plain_text = str_replace(["\n\n", "\n\n\n"], '', striptags($html));
+                                $plain_text = str_replace(["\n\n", "\n\n\n"], '', strip_tags($html));
 
                     if (config('mailtype') === 'html') {
                                         $php_mailer->isHTML();
