@@ -714,10 +714,12 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     btn.disabled=true; btn.textContent='Validation en coursâ¦';
     /* EA attend firstName + lastName â on passe le prÃ©nom seul */
     var payload={
-      start: state.selectedDate+' '+state.selectedSlot.slice(0,5)+':00',
-      end:   addMins(state.selectedDate+' '+state.selectedSlot.slice(0,5), 30),
-      serviceId: EA.serviceId, providerId: EA.providerId,
-      customer: { firstName: name, lastName: '.', email: email, phone: phone }
+      start_datetime: state.selectedDate+' '+state.selectedSlot.slice(0,5)+':00',
+      end_datetime:   addMins(state.selectedDate+' '+state.selectedSlot.slice(0,5), 30),
+      id_services: EA.serviceId,
+      id_users_provider: EA.providerId,
+      is_unavailability: 0,
+      customer: { firstName: name, lastName: '.', email: email, phone: phone||'' }
     };
     fetch(EA.baseUrl+'/api/v1/appointments',{
       method:'POST',
