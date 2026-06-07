@@ -172,9 +172,12 @@ class Email_messages
 
     private function dispatch(PHPMailer $mailer): void
     {
-        $api_key = getenv('BREVO_API_KEY');
+        $api_key = getenv('BREVO_API_KEY') ?: ($_ENV['BREVO_API_KEY'] ?? ($_SERVER['BREVO_API_KEY'] ?? ''));
+
+        log_message('error', 'BREVO dispatch called. api_key=' . ($api_key ? 'SET(len=' . strlen($api_key) . ')' : 'EMPTY'));
 
         if (!$api_key) {
+            log_message('error', 'BREVO: no API key, falling back to SMTP');
             $mailer->send();
             return;
         }
@@ -212,6 +215,7 @@ class Email_messages
             }
         }
 
+        log_message('error', 'BREVO: sending to ' . json_encode($to) . ' subject=' . $mailer->Subject);
         $ch = curl_init('https://api.brevo.com/v3/smtp/email');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -225,6 +229,8 @@ class Email_messages
         $response  = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+
+        log_message('error', 'BREVO response: HTTP ' . $http_code . ' body=' . $response);
 
         if ($http_code !== 201) {
             log_message('error', 'Brevo API error: HTTP ' . $http_code . ' - ' . $response);
@@ -280,7 +286,7 @@ class Email_messages
                                 $php_mailer->AltBody = $plain_text;
                 }
 
-                $php_mailer->addEmbeddedImage(FCPATH . 'assets/img/logo.png', 'logo.png', 'logo.png', 'base64', 'image/png');
+                try { $php_mailer->addEmbeddedImage(FCPATH . 'assets/img/logo.png', 'logo.png', 'logo.png', 'base64', 'image/png'); } catch (\Exception $e) { log_message('error', 'BREVO: logo embed failed: ' . $e->getMessage()); }
 
                 return $php_mailer;
     }
