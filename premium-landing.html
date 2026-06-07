@@ -596,8 +596,8 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     providerId: 2,
   };
 
-  var MONTHS_FR = ['Janvier','FÃ©vrier','Mars','Avril','Mai','Juin',
-                   'Juillet','AoÃ»t','Septembre','Octobre','Novembre','DÃ©cembre'];
+  var MONTHS_FR = ['Janvier','F\u00e9vrier','Mars','Avril','Mai','Juin',
+                   'Juillet','Ao\u00fbt','Septembre','Octobre','Novembre','D\u00e9cembre'];
   var DAYS_FR   = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
 
   var state = {
@@ -715,11 +715,28 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     /* EA attend firstName + lastName â on passe le prÃ©nom seul */
     /* 2-step: create customer then book appointment */
     var h = { 'Authorization':'Bearer '+EA.apiKey, 'Content-Type':'application/json' };
-    fetch(EA.baseUrl+'/api/v1/customers',{
-      method:'POST', headers:h,
-      body: JSON.stringify({ firstName: name, lastName: '.', email: email, phone: phone||'' })
-    })
-    .then(function(r){ if(!r.ok) return r.json().then(function(e){ throw new Error(e.message||'Erreur customer '+r.status); }); return r.json(); })
+    function getOrCreateCustomer(){
+      return fetch(EA.baseUrl+'/api/v1/customers',{
+        method:'POST', headers:h,
+        body: JSON.stringify({ firstName: name, lastName: '.', email: email, phone: phone||'' })
+      }).then(function(r){
+        if(r.ok) return r.json();
+        return r.json().then(function(e){
+          var msg = e.message||'';
+          if(msg.toLowerCase().indexOf('already in use')!==-1){
+            return fetch(EA.baseUrl+'/api/v1/customers',{headers:h})
+              .then(function(r2){ return r2.json(); })
+              .then(function(list){
+                var found=(list||[]).filter(function(c){ return c.email===email; })[0];
+                if(!found) throw new Error('Email d\u00e9j\u00e0 utilis\u00e9, client introuvable.');
+                return found;
+              });
+          }
+          throw new Error(msg||'Erreur customer '+r.status);
+        });
+      });
+    }
+    getOrCreateCustomer()
     .then(function(customer){
       return fetch(EA.baseUrl+'/api/v1/appointments',{
         method:'POST', headers:h,
@@ -736,7 +753,7 @@ html, body { margin: 0; padding: 0; background: #1a0b02; }
     .then(function(r){ if(!r.ok) return r.json().then(function(e){ throw new Error(e.message||'Erreur '+r.status); }); return r.json(); })
     .then(function(){
       document.getElementById('da-success-msg').innerHTML =
-        'Votre entretien confirmé le '+fmtDateFR(state.selectedDate)+' à '+state.selectedSlot.slice(0,5)+'. Email envoyé à <strong>'+email+'</strong>.';
+        'Votre entretien confirmé le '+fmtDateFR(state.selectedDate)+' \u00e0 '+state.selectedSlot.slice(0,5)+'. Email envoyé à <strong>'+email+'</strong>.';
       showStep('success');
     })
     .catch(function(e){
